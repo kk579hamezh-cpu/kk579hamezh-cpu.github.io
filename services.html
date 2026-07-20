@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Creative Technology Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-bg: #0a0a0f;
+            --secondary-bg: #1a1a2e;
+            --accent-purple: #8b5cf6;
+            --accent-blue: #06b6d4;
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8cc;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #0f0f1e 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 15, 0.7);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1.5rem 3rem;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Services Section */
+        .services {
+            min-height: 100vh;
+            padding: 8rem 3rem 3rem;
+            position: relative;
+        }
+
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .services-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .section-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Filter System */
+        .filter-system {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.1s both;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            color: var(--text-secondary);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .service-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.2));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(139, 92, 246, 0.2);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .service-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .service-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .skill-count {
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .explore-btn {
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .explore-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Skills Display */
+        .skills-display {
+            display: none;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .skills-display.active {
+            display: block;
+        }
+
+        .skills-category {
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .skills-category-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent-purple);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .skill-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .skill-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .expertise-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .expertise-professional {
+            background: rgba(139, 92, 246, 0.2);
+            color: #c4b5fd;
+            border: 1px solid rgba(139, 92, 246, 0.5);
+        }
+
+        .expertise-intermediate {
+            background: rgba(6, 182, 212, 0.2);
+            color: #67e8f9;
+            border: 1px solid rgba(6, 182, 212, 0.5);
+        }
+
+        .expertise-beginner {
+            background: rgba(148, 163, 184, 0.2);
+            color: #cbd5e1;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: none;
+            padding: 1rem 2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn.active {
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            .services {
+                padding: 6rem 1.5rem 2rem;
+            }
+
+            .section-header h1 {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-system {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">STUDIO</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="services-container">
+            <!-- Header -->
+            <div class="section-header">
+                <h1>Our Complete Expertise</h1>
+                <p>Explore our comprehensive range of creative technology services designed to transform your digital vision into reality</p>
+            </div>
+
+            <!-- Back Button -->
+            <button class="back-btn" onclick="goBack()">← Back to Services</button>
+
+            <!-- Filter System -->
+            <div class="filter-system" id="filterSystem">
+                <button class="filter-btn active" onclick="filterServices('all')">All Services</button>
+                <button class="filter-btn" onclick="filterServices('creative')">Creative</button>
+                <button class="filter-btn" onclick="filterServices('design')">Design</button>
+                <button class="filter-btn" onclick="filterServices('development')">Development</button>
+                <button class="filter-btn" onclick="filterServices('ai')">AI</button>
+                <button class="filter-btn" onclick="filterServices('social')">Social Media</button>
+                <button class="filter-btn" onclick="filterServices('strategy')">Strategy</button>
+                <button class="filter-btn" onclick="filterServices('content')">Content</button>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="services-grid" id="servicesGrid">
+                <!-- Services will be populated by JavaScript -->
+            </div>
+
+            <!-- Skills Display -->
+            <div class="skills-display" id="skillsDisplay">
+                <!-- Skills will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const servicesData = [
+            {
+                id: 'creative-production',
+                icon: '🎬',
+                title: 'Creative Production & Visual Storytelling',
+                description: 'Transform your ideas into compelling visual narratives with professional production and cinematic storytelling.',
+                category: 'creative',
+                skillCount: 12,
+                subcategories: [
+                    {
+                        name: '🎥 Video Editing & Production',
+                        skills: [
+                            { name: 'Video Editing', description: 'Professional video editing with color grading and effects', level: 'professional' },
+                            { name: 'Motion Design', description: 'Dynamic motion graphics and animations', level: 'professional' },
+                            { name: 'Cinematic Production', description: 'High-end cinematic video production', level: 'professional' },
+                            { name: 'Short-form Content', description: 'Optimized content for social platforms', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '📹 Visual Storytelling',
+                        skills: [
+                            { name: 'Narrative Design', description: 'Crafting compelling stories through visual media', level: 'professional' },
+                            { name: 'Story Development', description: 'Creative concept development and ideation', level: 'professional' },
+                            { name: 'Visual Composition', description: 'Expert framing and visual arrangement', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '⚡ Production Workflows',
+                        skills: [
+                            { name: 'Pre-production Planning', description: 'Detailed planning and storyboarding', level: 'professional' },
+                            { name: 'Asset Management', description: 'Organized file and asset management', level: 'intermediate' },
+                            { name: 'Post-production Optimization', description: 'Efficient post-production workflows', level: 'professional' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'brand-design',
+                icon: '🎨',
+                title: 'Brand Design & Digital Visual Identity',
+                description: 'Create a powerful visual identity that represents your brand with timeless design and modern aesthetics.',
+                category: 'design',
+                skillCount: 14,
+                subcategories: [
+                    {
+                        name: '🎯 Brand Identity',
+                        skills: [
+                            { name: 'Logo Design', description: 'Custom logo creation and brand marks', level: 'professional' },
+                            { name: 'Brand Guidelines', description: 'Comprehensive brand identity guidelines', level: 'professional' },
+                            { name: 'Visual Systems', description: 'Complete visual identity systems', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '🖼️ Visual Design',
+                        skills: [
+                            { name: 'Digital Graphics', description: 'High-quality digital graphics and illustrations', level: 'professional' },
+                            { name: 'Icon Design', description: 'Custom icon sets and symbol design', level: 'professional' },
+                            { name: 'Typography Design', description: 'Custom typeface and typography systems', level: 'intermediate' }
+                        ]
+                    },
+                    {
+                        name: '📐 Design Systems',
+                        skills: [
+                            { name: 'UI Design System', description: 'Scalable component-based design systems', level: 'professional' },
+                            { name: 'Color Theory', description: 'Strategic color palette development', level: 'professional' },
+                            { name: 'Design Patterns', description: 'Consistent design pattern libraries', level: 'intermediate' }
+                        ]
+                    },
+                    {
+                        name: '🎬 Visual Assets',
+                        skills: [
+                            { name: 'Thumbnail Design', description: 'Engaging thumbnail creation for media', level: 'professional' },
+                            { name: 'Social Media Graphics', description: 'Optimized graphics for social platforms', level: 'professional' },
+                            { name: 'Marketing Materials', description: 'Professional promotional materials', level: 'professional' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'web-development',
+                icon: '💻',
+                title: 'Web Development & Digital Experience',
+                description: 'Build modern, fast, and engaging websites that deliver exceptional user experiences and drive conversions.',
+                category: 'development',
+                skillCount: 16,
+                subcategories: [
+                    {
+                        name: '🌐 Frontend Development',
+                        skills: [
+                            { name: 'React Development', description: 'Modern React-based web applications', level: 'professional' },
+                            { name: 'Next.js', description: 'Full-stack React framework development', level: 'professional' },
+                            { name: 'TypeScript', description: 'Type-safe JavaScript development', level: 'professional' },
+                            { name: 'Responsive Design', description: 'Mobile-first responsive web design', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '🎨 UI/UX Development',
+                        skills: [
+                            { name: 'User Interface', description: 'Professional UI implementation', level: 'professional' },
+                            { name: 'User Experience', description: 'UX-focused design and development', level: 'professional' },
+                            { name: 'Accessibility', description: 'WCAG-compliant accessible websites', level: 'intermediate' }
+                        ]
+                    },
+                    {
+                        name: '⚡ Performance',
+                        skills: [
+                            { name: 'Performance Optimization', description: 'Web performance optimization', level: 'professional' },
+                            { name: 'SEO Optimization', description: 'Search engine optimization strategies', level: 'professional' },
+                            { name: 'Page Speed', description: 'Fast loading and optimized delivery', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '🚀 Web Solutions',
+                        skills: [
+                            { name: 'Landing Pages', description: 'High-conversion landing pages', level: 'professional' },
+                            { name: 'Portfolio Websites', description: 'Professional portfolio sites', level: 'professional' },
+                            { name: 'E-commerce', description: 'E-commerce platform development', level: 'intermediate' },
+                            { name: 'Content Management', description: 'CMS integration and management', level: 'intermediate' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'social-media',
+                icon: '📱',
+                title: 'Social Media Management & Community Growth',
+                description: 'Build engaged communities and grow your brand presence across social platforms with strategic content and management.',
+                category: 'social',
+                skillCount: 13,
+                subcategories: [
+                    {
+                        name: '📊 Strategy & Planning',
+                        skills: [
+                            { name: 'Social Media Strategy', description: 'Comprehensive social media strategies', level: 'professional' },
+                            { name: 'Content Calendar', description: 'Organized content planning and scheduling', level: 'professional' },
+                            { name: 'Audience Research', description: 'In-depth audience analysis and insights', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '📱 Platform Management',
+                        skills: [
+                            { name: 'Instagram Management', description: 'Professional Instagram account management', level: 'professional' },
+                            { name: 'TikTok Strategy', description: 'Viral-focused TikTok content strategy', level: 'professional' },
+                            { name: 'LinkedIn Marketing', description: 'Professional B2B LinkedIn strategies', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '🎯 Community Growth',
+                        skills: [
+                            { name: 'Engagement Strategy', description: 'Community engagement and growth tactics', level: 'professional' },
+                            { name: 'Influencer Collaboration', description: 'Influencer partnership management', level: 'intermediate' },
+                            { name: 'Community Building', description: 'Long-term community development', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '📈 Analytics',
+                        skills: [
+                            { name: 'Performance Analytics', description: 'Detailed platform analytics review', level: 'professional' },
+                            { name: 'Growth Metrics', description: 'Tracking and optimizing growth metrics', level: 'professional' },
+                            { name: 'ROI Measurement', description: 'Social media ROI analysis', level: 'intermediate' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'ai-solutions',
+                icon: '🤖',
+                title: 'AI Solutions, Automation & Intelligent Systems',
+                description: 'Leverage cutting-edge AI technology to automate workflows, create intelligent systems, and solve complex problems.',
+                category: 'ai',
+                skillCount: 15,
+                subcategories: [
+                    {
+                        name: '🧠 AI Implementation',
+                        skills: [
+                            { name: 'AI Workflow Automation', description: 'Intelligent workflow automation systems', level: 'professional' },
+                            { name: 'Machine Learning', description: 'ML model development and integration', level: 'intermediate' },
+                            { name: 'Natural Language Processing', description: 'NLP-based intelligent systems', level: 'intermediate' }
+                        ]
+                    },
+                    {
+                        name: '🎨 AI Content Creation',
+                        skills: [
+                            { name: 'AI Visual Generation', description: 'AI-powered visual content creation', level: 'professional' },
+                            { name: 'AI Writing', description: 'AI-assisted content writing tools', level: 'professional' },
+                            { name: 'Prompt Engineering', description: 'Advanced AI prompt optimization', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '⚙️ Automation Systems',
+                        skills: [
+                            { name: 'Process Automation', description: 'Business process automation', level: 'professional' },
+                            { name: 'Integration Workflows', description: 'AI and system integrations', level: 'professional' },
+                            { name: 'Data Processing', description: 'Intelligent data processing pipelines', level: 'intermediate' }
+                        ]
+                    },
+                    {
+                        name: '🔍 Intelligent Solutions',
+                        skills: [
+                            { name: 'Recommendation Systems', description: 'AI recommendation algorithms', level: 'intermediate' },
+                            { name: 'Predictive Analytics', description: 'Predictive modeling and analytics', level: 'intermediate' },
+                            { name: 'Chatbot Development', description: 'AI chatbot creation and deployment', level: 'professional' },
+                            { name: 'Custom AI Solutions', description: 'Tailored AI solutions for specific needs', level: 'intermediate' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'creative-direction',
+                icon: '🧠',
+                title: 'Creative Direction & Strategic Consulting',
+                description: 'Guide your creative vision with expert strategic consulting and professional creative direction for digital projects.',
+                category: 'strategy',
+                skillCount: 11,
+                subcategories: [
+                    {
+                        name: '📋 Strategic Planning',
+                        skills: [
+                            { name: 'Creative Strategy', description: 'Comprehensive creative project strategy', level: 'professional' },
+                            { name: 'Project Planning', description: 'Detailed project roadmaps and timelines', level: 'professional' },
+                            { name: 'Business Strategy', description: 'Digital business strategy consulting', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '🎯 Direction & Vision',
+                        skills: [
+                            { name: 'Creative Direction', description: 'Professional creative direction', level: 'professional' },
+                            { name: 'Brand Direction', description: 'Strategic brand positioning', level: 'professional' },
+                            { name: 'Vision Development', description: 'Long-term vision creation', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '💡 Consulting',
+                        skills: [
+                            { name: 'Digital Transformation', description: 'Digital transformation consulting', level: 'professional' },
+                            { name: 'Innovation Strategy', description: 'Innovation and technology strategy', level: 'professional' },
+                            { name: 'Problem Solving', description: 'Strategic problem-solving approaches', level: 'professional' },
+                            { name: 'Client Collaboration', description: 'Collaborative consulting process', level: 'professional' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'mobile-apps',
+                icon: '📱',
+                title: 'Mobile Applications & Interactive Experiences',
+                description: 'Create engaging mobile applications and interactive digital experiences that captivate users and drive engagement.',
+                category: 'development',
+                skillCount: 12,
+                subcategories: [
+                    {
+                        name: '📲 Mobile Development',
+                        skills: [
+                            { name: 'React Native', description: 'Cross-platform mobile app development', level: 'professional' },
+                            { name: 'iOS Development', description: 'Native iOS application development', level: 'intermediate' },
+                            { name: 'Android Development', description: 'Native Android application development', level: 'intermediate' }
+                        ]
+                    },
+                    {
+                        name: '🎮 Interactive Experiences',
+                        skills: [
+                            { name: 'Interactive Design', description: 'Interactive UI/UX design', level: 'professional' },
+                            { name: 'Animation', description: 'Complex animation and transitions', level: 'professional' },
+                            { name: 'Game Development', description: 'Interactive game and experience creation', level: 'intermediate' }
+                        ]
+                    },
+                    {
+                        name: '⚡ App Optimization',
+                        skills: [
+                            { name: 'Performance Optimization', description: 'Mobile app performance tuning', level: 'professional' },
+                            { name: 'User Testing', description: 'User experience testing and optimization', level: 'professional' },
+                            { name: 'App Store Optimization', description: 'ASO and app store optimization', level: 'intermediate' }
+                        ]
+                    },
+                    {
+                        name: '🔧 Backend Integration',
+                        skills: [
+                            { name: 'API Integration', description: 'Backend API integration', level: 'professional' },
+                            { name: 'Database Management', description: 'Mobile app database solutions', level: 'intermediate' },
+                            { name: 'Cloud Services', description: 'Cloud-based mobile solutions', level: 'intermediate' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'content-strategy',
+                icon: '✍️',
+                title: 'Content Strategy & Brand Communication',
+                description: 'Develop powerful content strategies and brand communication that resonates with your audience and drives results.',
+                category: 'content',
+                skillCount: 18,
+                subcategories: [
+                    {
+                        name: '📝 Content Writing',
+                        skills: [
+                            { name: 'Creative Writing', description: 'Compelling creative copy and storytelling', level: 'professional' },
+                            { name: 'Blog Writing', description: 'Professional blog post creation', level: 'professional' },
+                            { name: 'Social Media Copywriting', description: 'Engaging social media copy', level: 'professional' },
+                            { name: 'Website Content', description: 'Professional website copy and messaging', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '🎬 Script & Story',
+                        skills: [
+                            { name: 'Video Script Writing', description: 'Professional video scripts', level: 'professional' },
+                            { name: 'Story Development', description: 'Narrative structure and story arcs', level: 'professional' },
+                            { name: 'Short-form Scripts', description: 'Scripts for short-form content', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '🧠 Strategy',
+                        skills: [
+                            { name: 'Content Strategy', description: 'Comprehensive content planning', level: 'professional' },
+                            { name: 'Content Calendar', description: 'Editorial calendars and planning', level: 'professional' },
+                            { name: 'Audience Research', description: 'Audience insight and research', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '💬 Brand Communication',
+                        skills: [
+                            { name: 'Brand Voice', description: 'Distinctive brand voice development', level: 'professional' },
+                            { name: 'Brand Messaging', description: 'Core brand messaging strategy', level: 'professional' },
+                            { name: 'Communication Strategy', description: 'Strategic communication planning', level: 'professional' }
+                        ]
+                    },
+                    {
+                        name: '🤖 AI Content',
+                        skills: [
+                            { name: 'AI Content Enhancement', description: 'AI-powered content improvement', level: 'professional' },
+                            { name: 'Prompt-Based Creation', description: 'AI-assisted content creation', level: 'professional' },
+                            { name: 'Content Optimization', description: 'AI-based content optimization', level: 'intermediate' }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        let currentService = null;
+
+        function renderServices(filter = 'all') {
+            const grid = document.getElementById('servicesGrid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' 
+                ? servicesData 
+                : servicesData.filter(s => s.category === filter);
+
+            filtered.forEach((service, index) => {
+                const card = document.createElement('div');
+                card.className = 'service-card';
+                card.style.animation = `fadeInUp 0.6s ease-out ${index * 0.1}s both`;
+                card.innerHTML = `
+                    <div class="service-icon">${service.icon}</div>
+                    <div class="service-title">${service.title}</div>
+                    <div class="service-description">${service.description}</div>
+                    <div class="service-meta">
+                        <div class="skill-count">${service.skillCount} Skills</div>
+                        <button class="explore-btn" onclick="expandService('${service.id}')">Explore</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function expandService(serviceId) {
+            const service = servicesData.find(s => s.id === serviceId);
+            currentService = service;
+
+            document.getElementById('servicesGrid').style.display = 'none';
+            document.getElementById('filterSystem').style.display = 'none';
+            document.querySelector('.section-header').style.display = 'none';
+            document.querySelector('.back-btn').classList.add('active');
+
+            const skillsDisplay = document.getElementById('skillsDisplay');
+            skillsDisplay.innerHTML = `<h2 style="font-size: 2rem; margin-bottom: 2rem;">${service.icon} ${service.title}</h2>`;
+
+            service.subcategories.forEach((subcategory, index) => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'skills-category';
+                categoryDiv.style.animation = `fadeInUp 0.6s ease-out ${index * 0.1}s both`;
+
+                const titleDiv = document.createElement('div');
+                titleDiv.className = 'skills-category-title';
+                titleDiv.textContent = subcategory.name;
+
+                const skillsGridDiv = document.createElement('div');
+                skillsGridDiv.className = 'skills-grid';
+
+                subcategory.skills.forEach(skill => {
+                    const skillCard = document.createElement('div');
+                    skillCard.className = 'skill-card';
+                    const expertiseClass = `expertise-${skill.level.toLowerCase()}`;
+                    skillCard.innerHTML = `
+                        <div class="skill-name">${skill.name}</div>
+                        <div class="skill-description">${skill.description}</div>
+                        <div class="expertise-badge ${expertiseClass}">
+                            ${skill.level === 'professional' ? '🟣' : skill.level === 'intermediate' ? '🔵' : '⚪'} 
+                            ${skill.level}
+                        </div>
+                    `;
+                    skillsGridDiv.appendChild(skillCard);
+                });
+
+                categoryDiv.appendChild(titleDiv);
+                categoryDiv.appendChild(skillsGridDiv);
+                skillsDisplay.appendChild(categoryDiv);
+            });
+
+            skillsDisplay.classList.add('active');
+        }
+
+        function goBack() {
+            document.getElementById('skillsDisplay').classList.remove('active');
+            document.getElementById('skillsDisplay').innerHTML = '';
+            document.getElementById('servicesGrid').style.display = 'grid';
+            document.getElementById('filterSystem').style.display = 'flex';
+            document.querySelector('.section-header').style.display = 'block';
+            document.querySelector('.back-btn').classList.remove('active');
+            currentService = null;
+        }
+
+        function filterServices(category) {
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            renderServices(category);
+        }
+
+        // Initial render
+        renderServices();
+    </script>
+</body>
+</html>
